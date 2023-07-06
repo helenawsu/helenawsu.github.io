@@ -5,7 +5,7 @@
     <nav>
       <ul>
         <li>
-          <a href="/blog">Blog</a>
+          <a href="/blogs">Blogs</a>
         </li>
         <li>
             <a href="https://helenawsu.github.io/photography/">Photography</a>
