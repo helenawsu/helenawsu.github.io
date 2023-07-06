@@ -20,6 +20,8 @@ let randemo = function(){
               {randemo()}
             </a>
           </h2>
+          {post.meta.description}
+          <br/>
           Published {post.meta.date}
         </li>
       {/each}

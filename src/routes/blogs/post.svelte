@@ -2,6 +2,7 @@
 <script>
     export let title
     export let date
+    export let description
     </script>
     
     <article>
