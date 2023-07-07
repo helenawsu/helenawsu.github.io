@@ -1,6 +1,6 @@
 <!-- src/routes/blogs/+page.svelte -->
 <script>
-  import { onMount } from 'svelte';
+	import { GoogleTranslate } from '@candidosales/svelte-google-translate';
 
   export let data
   var emojis = [
@@ -13,7 +13,12 @@ return emojis[Math.floor(Math.random() * emojis.length)];
 
     
   </script>
-
+    <GoogleTranslate
+    elementId={'google-translate-element'}
+    options={{ pageLanguage: 'auto', includedLanguages: 'zh,en' }}
+  />
+  <div id="google-translate-element">
+    </div>
   <h1>Blogs</h1>
     
   <ul>
@@ -24,9 +29,9 @@ return emojis[Math.floor(Math.random() * emojis.length)];
             {emoji()}
           </a>
         </h2>
-        {post.meta.description}
-        <br/>
         Published {post.meta.date}
+        <br/>
+        {post.meta.description}
       </li>
     {/each}
   </ul>

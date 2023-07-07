@@ -9,7 +9,6 @@
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write .",
 		"gh-pages": "npm run build && npx gh-pages -d build"
-
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.0.0",
@@ -24,8 +23,11 @@
 		"prettier-plugin-svelte": "^2.10.1",
 		"sass": "^1.63.6",
 		"svelte": "^4.0.0",
-		"svelte-pareprocess": "^5.0.4",
+		"svelte-preprocess": "^5.0.4",
 		"vite": "^4.3.6"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@candidosales/svelte-google-translate": "^0.0.11"
+	}
 }
