@@ -1,6 +1,6 @@
 <!-- Header.svelte -->
 <header>
-    <a href="/">Home</a>
+    <!-- <a href="/">Home</a>
   
     <nav>
       <ul>
@@ -14,5 +14,5 @@
           <a href="/about">About</a>
         </li>
       </ul>
-    </nav>
+    </nav> -->
   </header>

@@ -1,2 +1,6 @@
-<h1>Welcome to Helena's Website</h1>
-<p>explore around!</p>
+<script>
+    import Graph from '$lib/components/Graph.svelte';
+</script>
+
+
+<Graph />
