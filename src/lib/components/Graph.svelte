@@ -2,6 +2,8 @@
     import { onMount } from 'svelte';
     import RootContent from '$lib/components/RootContent.svelte'; // Import your component
     import * as d3 from 'd3';
+    import anime from './animejswrapper.js';
+
 
     onMount(() => {
         const width = window.innerWidth;
@@ -12,7 +14,7 @@
             
             { id: "child1", radius: 30, text: "seyan", url: "https://helenawsu.github.io/seyan/" },
             { id: "child2", radius: 50, text: "sorry i'm empty", url: "https://imepmty.com/" },
-            { id: "child3", radius: 40, text: "photography", url: "https://helenawsu.github.io/photography/" },
+            { id: "child3", radius: 60, text: "photography", url: "https://helenawsu.github.io/photography/" },
             { id: "child4", radius: 30, text: "resume", url: "https://drive.google.com/file/d/1lk2t61f5mADALHl1LuW7USZ8-86D2fq8/view?usp=sharing" }
         ];
 
@@ -58,7 +60,6 @@
             .append("foreignObject")
             .attr("x", -100) 
             .attr("y", -100)
-            .attr("class", "hover-circle")
             .each(function (d) {
                 const container = this; 
                 const component = new d.component({
@@ -86,22 +87,80 @@
         node.filter(d => d.id !== "root")
             .append("circle")
             .attr("r", d => d.radius)
-            .attr("fill", "#69b3a2");
+            .attr("fill", "#69b3a2")
+            
 
-        node.filter(d => d.id !== "root")
-            .append("foreignObject")
-            .attr("width", d => d.radius * 2) 
-            .attr("height", d => d.radius * 2) 
-            .attr("x", d => -d.radius) 
-            .attr("y", d => -d.radius) 
-            .attr("class", "hover-circle")
-            .append("xhtml:div")
-            .style("display", "flex")
-            .style("justify-content", "center")
-            .style("align-items", "center")
-            .style("width", "100%")
-            .style("height", "100%")
-            .html(d => `<a href="${d.url}" target="_blank" style="text-decoration: none; color: white; font-size: 12px;">${d.text}</a>`);
+            node.filter(d => d.id !== "root")
+    .append("foreignObject")
+    .each(function(d) {
+        d.animationPlayed = false; // Initialize a flag to track the animation state
+    })
+    .on("mouseover", function(event, d) {
+        console.log("moucsein")
+        if (!d.animationPlayed) {  // Check if the animation has already been played
+            // Trigger the animation
+            anime({
+                targets: this,
+                r: d.radius * 1.2, 
+                duration: 300,
+                easing: 'easeOutQuad'
+            });
+            // Create and animate the ripple effect
+            const ripple = d3.select(this.parentNode)
+                .append("circle")
+                .attr("cx", d3.select(this).attr("cx"))
+                .attr("cy", d3.select(this).attr("cy"))
+                .attr("r", d.radius) 
+                .attr("fill", "rgba(255, 165, 0, 0.3)") 
+                .style("pointer-events", "none")
+                .attr("class", "ripple");
+
+            anime({
+                targets: ripple.node(), 
+                r: d.radius * 1.5, 
+                opacity: 0, 
+                duration: 800,
+                easing: 'easeOutQuad',
+                loop: false,
+                complete: function() {
+                    ripple.remove(); 
+                }
+            });
+
+            d.animationPlayed = true; 
+        }
+    })
+    .on("mouseout", function(event, d) {
+        console.log("mouseout")
+        d.animationPlayed = false;  
+    })
+    .attr("width", d => d.radius * 2) 
+    .attr("height", d => d.radius * 2) 
+    .attr("x", d => -d.radius) 
+    .attr("y", d => -d.radius) 
+    .append("xhtml:div")
+    .style("display", "flex")
+    .style("justify-content", "center")
+    .style("align-items", "center")
+    .style("width", "100%")
+    .style("height", "100%")
+    .html(d => `
+        <a href="${d.url}" target="_blank" 
+            style="
+                text-decoration: none; 
+                color: white; 
+                display: flex; 
+                justify-content: center; 
+                align-items: center; 
+                max-width: 100%;
+                margin: 4rem;
+                cursor: pointer;
+            ">
+            ${d.text}
+        </a>
+    `);
+
+
 
         function ticked() {
             link
@@ -131,7 +190,5 @@
         }
     });
 </script>
-
-
 
 <div id="d3-container"></div>

@@ -29,6 +29,8 @@
 	"type": "module",
 	"dependencies": {
 		"@candidosales/svelte-google-translate": "^0.0.11",
-		"d3": "^7.9.0"
+		"animejs": "^3.2.2",
+		"d3": "^7.9.0",
+		"material-ripple-effects": "^2.0.1"
 	}
 }
