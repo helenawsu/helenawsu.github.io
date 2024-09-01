@@ -32,6 +32,7 @@ To create a production version of your app:
 ```bash
 npm run build && npx gh-pages -d build
 ```
+do .nojekyll
 
 You can preview the production build with `npm run preview`.
 

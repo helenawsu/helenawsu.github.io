@@ -34,10 +34,20 @@
 
         const simulation = d3.forceSimulation(nodes)
             .force("link", d3.forceLink(links).id(d => d.id).distance(150))
+            // .alphaDecay(0.02)  // Slow down the alpha decay, default is 0.0228
+            // .velocityDecay(0.2)  // Slow down velocity decay, default is 0.4
+            .alpha(1)  // Start with zero alpha
+            .alphaMin(0.001)  // Set a lower threshold to allow for a smoother finish
+            .alphaDecay(0.05)  // Slow down decay to prolong the effect
+            .alphaTarget(0.1)
             .force("charge", d3.forceManyBody().strength(-300))
             .force("center", d3.forceCenter(width / 2, height / 2))
             .force("collision", d3.forceCollide().radius(d => d.radius)) // Use the calculated radius for collision
             .on("tick", ticked);
+        // Apply the random force every 3 seconds
+        setInterval(() => {
+            simulation.alphaTarget(0.1).restart();
+        }, 1000);
 
         const link = svg.append("g")
             .selectAll("line")
