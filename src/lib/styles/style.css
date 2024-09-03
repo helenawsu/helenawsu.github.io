@@ -3,10 +3,11 @@ body {
     margin: 0;
 
     background: #e9f2ee;
-    color: #333;
+    color: #fffafa;
     font-family: "Reddit Mono", monospace;
     width: 100vw;
     height: 100vh;
+    
   }
   
   main {
@@ -15,6 +16,57 @@ body {
     width: 100vw;
     height: 100vh;
   }
+  /* Make all links white */
+a:link,        /* Unvisited link */
+a:visited,     /* Visited link */
+a:hover,       /* Mouse over link */
+a:active {     /* Selected link */
+    color: white;
+    /* text-decoration: none;  */
+}
+
+/* Optional: You can also add specific styles for hovering, etc. */
+a:hover {
+    color: rgb(255, 216, 172);
+    text-decoration: underline; /* Add underline only on hover, for example */
+}
+  .circle-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; 
+    aspect-ratio: 1;
+    width: max-content;
+    padding: 0rem;
+     
+}
+
+.circle {
+    display: flex; 
+    justify-content: center;
+    align-items: center; 
+    width: 100%;  
+    height: 100%;  
+    aspect-ratio: 1;
+    background-color: #8c975e;
+    border-radius: 50%;  /* Makes it a circle */
+    text-align: center;
+}
+
+.circle h1 {
+  background-color: rgb(227, 116, 47); /* Highlight color */
+  color: rgb(255, 255, 255); /* Text color */
+  padding: 0.2em; /* Adds some space around the text */
+  border-radius: 0.3em; /* Rounded corners */
+  display: inline-block; /* Ensures the padding and border-radius apply only to the text */
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the text inside the content div */
+  margin: 1rem;
+}
   .ripple-effect {
     position: absolute;
     border-radius: 50%;

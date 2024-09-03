@@ -1,204 +1,235 @@
 <script>
-    import { onMount } from 'svelte';
-    import RootContent from '$lib/components/RootContent.svelte'; // Import your component
-    import * as d3 from 'd3';
-    import anime from './animejswrapper.js';
+import { onMount } from 'svelte';
+import RootContent from '$lib/components/RootContent.svelte'; 
+import NodeContentTemplate from './NodeContentTemplate.svelte';
+import WorkContent from './WorkContent.svelte';
+import ProjectContent from './ProjectContent.svelte';
+import RecognitionContent from './RecognitionContent.svelte';
+import RandomContent from './RandomContent.svelte';
+import CoolPeople from './CoolPeople.svelte';
+import * as d3 from 'd3';
+import Modal from './Modal.svelte';
+let showModal = false;
+function recalculateForeignObject(node, simulation) {
+    node.append("foreignObject")
+        .attr("x", -100) 
+        .attr("y", -100)
+        .each(function (d) {
+            const container = this; 
+            const component = new d.component({
+                target: container,
+                props: d.props
+            });
 
+            requestAnimationFrame(() => {
+                const boundingBox = container.firstElementChild.getBoundingClientRect();
+                const newRadius = Math.max(boundingBox.width, boundingBox.height) / 2;
+                d.radius = newRadius;
 
-    onMount(() => {
-        const width = window.innerWidth;
-        const height = window.innerHeight;
+                d3.select(container)
+                    .attr("width", boundingBox.width)
+                    .attr("height", boundingBox.height)
+                    .attr("x", -boundingBox.width / 2) 
+                    .attr("y", -boundingBox.height / 2);
 
-        const nodes = [
-            { id: "root", component: RootContent, radius: 0 }, // Start with a default radius of 0
-            
-            { id: "child1", radius: 30, text: "seyan", url: "https://helenawsu.github.io/seyan/" },
-            { id: "child2", radius: 50, text: "sorry i'm empty", url: "https://imepmty.com/" },
-            { id: "child3", radius: 60, text: "photography", url: "https://helenawsu.github.io/photography/" },
-            { id: "child4", radius: 30, text: "resume", url: "https://drive.google.com/file/d/1lk2t61f5mADALHl1LuW7USZ8-86D2fq8/view?usp=sharing" }
-        ];
+                simulation.force("collision").radius(d => d.radius);
+                simulation.alpha(1).restart();
+            });
+        });
+}
 
-        const links = [
-            { source: "root", target: "child1" },
-            { source: "root", target: "child2" },
-            { source: "root", target: "child3" },
-            { source: "root", target: "child4" }
-        ];
+onMount(() => {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
 
-        const svg = d3.select("#d3-container")
-            .append("svg")
-            .attr("width", "100%")
-            .attr("height", "100%")
-            .attr("viewBox", `0 0 ${width} ${height}`)
-            .attr("preserveAspectRatio", "xMidYMid meet");
+    let childNodesVisible = false;
+    
+    let nodes = [
+        { id: "root", component: RootContent, radius: 0,  fx: width / 2, y: height/2}, 
+        { id: "child2", component: ProjectContent, radius: 0, fy: height*3/4 }, 
+        { id: "child3", component: RecognitionContent, radius: 0 }, 
+        { id: "child1", component: WorkContent, radius: 0, fx: width/4 },
+        { id: "child4", component: RandomContent, radius: 0, fx: width *3/4, y: height}, //random
 
-        const simulation = d3.forceSimulation(nodes)
-            .force("link", d3.forceLink(links).id(d => d.id).distance(150))
-            // .alphaDecay(0.02)  // Slow down the alpha decay, default is 0.0228
-            // .velocityDecay(0.2)  // Slow down velocity decay, default is 0.4
-            .alpha(1)  // Start with zero alpha
-            .alphaMin(0.001)  // Set a lower threshold to allow for a smoother finish
-            .alphaDecay(0.05)  // Slow down decay to prolong the effect
-            .alphaTarget(0.1)
-            .force("charge", d3.forceManyBody().strength(-300))
-            .force("center", d3.forceCenter(width / 2, height / 2))
-            .force("collision", d3.forceCollide().radius(d => d.radius)) // Use the calculated radius for collision
-            .on("tick", ticked);
-        // Apply the random force every 3 seconds
-        setInterval(() => {
-            simulation.alphaTarget(0.1).restart();
-        }, 1000);
+    ];
 
-        const link = svg.append("g")
-            .selectAll("line")
-            .data(links)
-            .enter().append("line")
+    const linkDistance = link => {
+        if (link.source.id === "child4") {
+            return 100; 
+        }
+        return 400; 
+    };
+
+    let links = [
+        { source: "root", target: "child1" },
+        { source: "root", target: "child2" },
+        { source: "root", target: "child3" },
+        { source: "root", target: "child4" }
+    ];
+
+    const svg = d3.select("#d3-container")
+        .append("svg")
+        .attr("width", "100%")
+        .attr("height", "100%")
+        .attr("viewBox", `0 0 ${width} ${height}`)
+        .attr("preserveAspectRatio", "xMidYMid meet");
+
+    const simulation = d3.forceSimulation(nodes)
+        .force("link", d3.forceLink(links).id(d => d.id).distance(linkDistance))
+        .alpha(0.3)
+        .alphaDecay(0.05)
+        .alphaTarget(0.1)
+        .force("charge", d3.forceManyBody().strength(d => {
+        if (d.id === "root") {
+            return -10000;  
+        } else if (d.id.includes("random")) {
+            return 100;  
+        } else {
+            return -1000;  
+        }
+    }))
+        .force("center", d3.forceCenter(width / 2, height / 2))
+        .force("collision", d3.forceCollide().radius(d => d.radius))
+        .on("tick", ticked);
+
+    let link = svg.append("g")
+        .selectAll("line")
+        .data(links)
+        .enter().append("line")
+        .attr("stroke-width", 2)
+        .attr("stroke", "#999");
+
+    let node = svg.append("g")
+        .selectAll(".node")
+        .data(nodes)
+        .enter().append("g")
+        .attr("class", "node")
+        .call(d3.drag()
+            .on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended));
+
+    recalculateForeignObject(node, simulation);
+    node.filter(d => d.id === "randomchild1")
+        .on("click", function(event, d) {
+            console.log("click");
+            showModal = true;
+        });
+    //toggle random nodes collapse and expand
+    node.filter(d => d.id === "child4")
+        .on("click", function(event, d) {
+            childNodesVisible = !childNodesVisible;
+            if (childNodesVisible) {
+                // Find the position of the parent node (child4)
+            const parentNode = nodes.find(n => n.id === "child4");
+            const parentX = parentNode.x;
+            const parentY = parentNode.y;
+            // Add child nodes close to the parent node's position
+            nodes = nodes.concat([
+                { id: "randomchild1", component: CoolPeople, radius: 0, parent: "child4", fx: parentX }, 
+                // { id: "randomchild2", component: NodeContentTemplate, radius: 0, parent: "child4", fx: parentX}, 
+                // { id: "randomchild3", component: NodeContentTemplate, radius: 0, parent: "child4", x: parentX, y: parentY - 50 }
+            ]);
+                links = links.concat([
+                    { source: "child4", target: "randomchild1", x: width/2 },
+                    // { source: "child4", target: "randomchild2" },
+                    // { source: "child4", target: "randomchild3" }
+                ]);
+            } else {
+                nodes = nodes.filter(n => n.parent !== "child4");
+                links = links.filter(l => l.source.id !== "child4");
+            }
+            updateGraph();
+            node.filter(d => d.id === "randomchild1")
+        .on("click", function(event, d) {
+            console.log("click");
+            showModal = true;
+        });
+        });
+    // Add hover effect for scaling non-root nodes
+    node.filter(d => d.id !== "root")
+        .on("mouseover", function(event, d) {
+            d3.select(this).select("foreignObject")
+                .transition()
+                .duration(300)
+                .style("transform", "scale(1.25)");
+        })
+        .on("mouseout", function(event, d) {
+            d3.select(this).select("foreignObject")
+                .transition()
+                .duration(300)
+                .style("transform", "scale(1)");
+        });
+    function updateGraph() {
+        link = link.data(links);
+        link.exit().remove();
+        link = link.enter().append("line")
             .attr("stroke-width", 2)
-            .attr("stroke", "#999");
+            .attr("stroke", "#999")
+            .merge(link);
 
-        const node = svg.append("g")
-            .selectAll(".node")
-            .data(nodes)
-            .enter().append("g")
+        node = node.data(nodes);
+        node.exit().remove();
+        const nodeEnter = node.enter().append("g")
             .attr("class", "node")
             .call(d3.drag()
                 .on("start", dragstarted)
                 .on("drag", dragged)
                 .on("end", dragended));
+        const nodeEnterFiltered = nodeEnter.filter(d => d.id.includes('randomchild'));
+        recalculateForeignObject(nodeEnterFiltered, simulation);
+        node = nodeEnter.merge(node);
+        simulation.nodes(nodes);
+        simulation.force("link").links(links);
+        simulation.force("collision").radius(d => d.radius+10);
+        simulation.alpha(0.3).restart();
+        simulation.force("link", d3.forceLink(links).id(d => d.id).distance(linkDistance));
+    }
 
-        node.filter(d => d.id === "root")
-            .append("foreignObject")
-            .attr("x", -100) 
-            .attr("y", -100)
-            .each(function (d) {
-                const container = this; 
-                const component = new d.component({
-                    target: container,
-                    props: d.props
-                });
+// d3Utilities
+    function ticked() {
+        nodes.forEach(d => {
+            d.x = Math.max(d.radius, Math.min(width - d.radius, d.x));
+            d.y = Math.max(d.radius, Math.min(height - d.radius, d.y));
+        });
 
-                requestAnimationFrame(() => {
-                    const boundingBox = container.firstElementChild.getBoundingClientRect();
-                    const newRadius = Math.max(boundingBox.width, boundingBox.height) / 2;
-                    
-                    d.radius = newRadius + 10;
-                    d3.select(container)
-                        .attr("width", boundingBox.width)
-                        .attr("height", boundingBox.height)
-                        .attr("x", -boundingBox.width / 2) 
-                        .attr("y", -boundingBox.height / 2);
+        link
+            .attr("x1", d => d.source.x)
+            .attr("y1", d => d.source.y)
+            .attr("x2", d => d.target.x)
+            .attr("y2", d => d.target.y);
 
-                    // Restart the simulation with the updated radius
-                    simulation.force("collision").radius(d => d.radius);
-                    simulation.alpha(1).restart();
-                });
-            });
+        node.attr("transform", d => `translate(${d.x},${d.y})`);
+    }
 
-        node.filter(d => d.id !== "root")
-            .append("circle")
-            .attr("r", d => d.radius)
-            .attr("fill", "#69b3a2")
-            
+    function dragstarted(event, d) {
+        if (!event.active) simulation.alphaTarget(0.3).restart();
+        d.fx = d.x;
+        d.fy = d.y;
+    }
 
-            node.filter(d => d.id !== "root")
-    .append("foreignObject")
-    .each(function(d) {
-        d.animationPlayed = false; // Initialize a flag to track the animation state
-    })
-    .on("mouseover", function(event, d) {
-        console.log("moucsein")
-        if (!d.animationPlayed) {  // Check if the animation has already been played
-            // Trigger the animation
-            anime({
-                targets: this,
-                r: d.radius * 1.2, 
-                duration: 300,
-                easing: 'easeOutQuad'
-            });
-            // Create and animate the ripple effect
-            const ripple = d3.select(this.parentNode)
-                .append("circle")
-                .attr("cx", d3.select(this).attr("cx"))
-                .attr("cy", d3.select(this).attr("cy"))
-                .attr("r", d.radius) 
-                .attr("fill", "rgba(255, 165, 0, 0.3)") 
-                .style("pointer-events", "none")
-                .attr("class", "ripple");
+    function dragged(event, d) {
+        d.fx = event.x;
+        d.fy = event.y;
+    }
 
-            anime({
-                targets: ripple.node(), 
-                r: d.radius * 1.5, 
-                opacity: 0, 
-                duration: 800,
-                easing: 'easeOutQuad',
-                loop: false,
-                complete: function() {
-                    ripple.remove(); 
-                }
-            });
-
-            d.animationPlayed = true; 
-        }
-    })
-    .on("mouseout", function(event, d) {
-        console.log("mouseout")
-        d.animationPlayed = false;  
-    })
-    .attr("width", d => d.radius * 2) 
-    .attr("height", d => d.radius * 2) 
-    .attr("x", d => -d.radius) 
-    .attr("y", d => -d.radius) 
-    .append("xhtml:div")
-    .style("display", "flex")
-    .style("justify-content", "center")
-    .style("align-items", "center")
-    .style("width", "100%")
-    .style("height", "100%")
-    .html(d => `
-        <a href="${d.url}" target="_blank" 
-            style="
-                text-decoration: none; 
-                color: white; 
-                display: flex; 
-                justify-content: center; 
-                align-items: center; 
-                max-width: 100%;
-                margin: 4rem;
-                cursor: pointer;
-            ">
-            ${d.text}
-        </a>
-    `);
-
-
-
-        function ticked() {
-            link
-                .attr("x1", d => d.source.x)
-                .attr("y1", d => d.source.y)
-                .attr("x2", d => d.target.x)
-                .attr("y2", d => d.target.y);
-
-            node.attr("transform", d => `translate(${d.x},${d.y})`);
-        }
-
-        function dragstarted(event, d) {
-            if (!event.active) simulation.alphaTarget(0.3).restart();
-            d.fx = d.x;
-            d.fy = d.y;
-        }
-
-        function dragged(event, d) {
-            d.fx = event.x;
-            d.fy = event.y;
-        }
-
-        function dragended(event, d) {
-            if (!event.active) simulation.alphaTarget(0);
-            d.fx = null;
-            d.fy = null;
-        }
-    });
+    function dragended(event, d) {
+        if (!event.active) simulation.alphaTarget(0);
+        d.fx = null;
+        d.fy = null;
+    }
+});
 </script>
 
 <div id="d3-container"></div>
+<Modal bind:showModal>
+	<h3 slot="header">
+		A list of cool people
+		<!-- <small><em>adjective</em> mod·al \ˈmō-dəl\</small> -->
+	</h3>
+
+	<ul >
+        <li><a href="https://github.com/r2dev2" style="color: black;">r2dev2</a></li>
+	</ul>
+
+</Modal>

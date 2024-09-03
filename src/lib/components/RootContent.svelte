@@ -1,47 +1,50 @@
 <script>
 </script>
 
-<div class="circle-container">
-    <div class="circle">
+<div class="root-container">
+    <div class="root-circle">
         <div class="content">
-            <h1>Welcome to Helena's Website</h1>
-            <p>explore around!</p>
+            <h1>Welcome to Helena's Page</h1>
+            <p>I am a third-year at UC Berkeley majoring in EECS and IEOR.</p>
+            <p>Interested in AI, XR, CV.</p>
+            <p>Here is my <a href="https://drive.google.com/file/d/1lk2t61f5mADALHl1LuW7USZ8-86D2fq8/view?usp=sharing" target="_blank">resume</a>, or explore around!</p>
+
         </div>
     </div>
 </div>
 
 <style>
-    .circle-container {
+    .root-container {
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 100%; 
         aspect-ratio: 1;
-        width: max-content;
+        border-radius: 50%;  /* Makes it a circle */
+        width: max-content ;
+        max-width: 450px;
         padding: 0rem;
-         
+        z-index: -1;
     }
 
-    .circle {
+    .root-circle {
         display: flex; 
         justify-content: center;
         align-items: center; 
-        width: 70%;  
+        width: 100%;  
         aspect-ratio: 1;
-        background-color: #1f77b4;
+        background-color: #5baeac;
         border-radius: 50%;  /* Makes it a circle */
         text-align: center;
-        color: white;
+        
     }
 
-    .circle p, .circle h1 {
-        margin: 1rem;  /* Remove default paragraph and heading margins */
+    /* .circle p, .circle h1 {
+        margin: 1rem;  
+    } */
+    h1{
+        font-size: 1.5rem;
     }
-
-    .content {
-        display: flex;
-        flex-direction: column;
-        align-items: center; /* Center the text inside the content div */
-        margin: 0rem;
+    p {
+        margin: .5rem;
     }
 </style>
