@@ -7,8 +7,8 @@
             <h1>Project</h1>
             <br>
                 <p><a href="https://cal-cs184-student.github.io/hw-webpages-sp24-anavmehta12/finalproject/index.html">CG - Cloud Simulation</a> </p>
-                <p><a href="helenawsu.github.io/photography/">Web - Photography Site</a></p>
-                <p><a href="helenawsu.github.io/seyan/">Web - Live Color Picker</a> </p>
+                <p><a href="https://helenawsu.github.io/photography/">Web - Photography Site</a></p>
+                <p><a href="https://helenawsu.github.io/seyan/">Web - Live Color Picker</a> </p>
         </div>
     </div>
 </div>
