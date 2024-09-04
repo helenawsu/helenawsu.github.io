@@ -9,6 +9,7 @@ import RandomContent from './RandomContent.svelte';
 import CoolPeople from './CoolPeople.svelte';
 import * as d3 from 'd3';
 import Modal from './Modal.svelte';
+
 let showModal = false;
 function recalculateForeignObject(node, simulation) {
     node.append("foreignObject")
@@ -39,8 +40,14 @@ function recalculateForeignObject(node, simulation) {
 }
 
 onMount(() => {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    const handleResize = () => {
+         width = window.innerWidth;
+         height = window.innerHeight;
+        };
+
+        window.addEventListener('resize', handleResize);
 
     let childNodesVisible = false;
     
@@ -54,10 +61,16 @@ onMount(() => {
     ];
 
     const linkDistance = link => {
-        if (link.source.id === "child4") {
-            return 100; 
+        if (width < 500) {
+            if (link.source.id === "child4") {
+            return 20; 
         }
-        return 400; 
+        return 50; 
+        } else 
+        {if (link.source.id === "child4") {
+            return width /12; 
+        }
+        return width / 4; }
     };
 
     let links = [

@@ -21,6 +21,7 @@
         border-radius: 50%;  
         /* idk why the below fix but it did */
         width: 30vw; 
+        max-height:60vh;
         padding: 0rem;
         z-index: 1;
     }
