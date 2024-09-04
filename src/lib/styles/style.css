@@ -37,6 +37,7 @@ a:hover {
     width: 100%; 
     aspect-ratio: 1;
     width: max-content;
+    max-width: 40vw;
     padding: 0rem;
      
 }
@@ -99,4 +100,15 @@ a:hover {
 svg {
     width: 100%;
     height: 100%;
+}
+.last-updated {
+  position: fixed;
+  top: 1rem; 
+  right: 1rem; 
+  /* background-color: rgba(0, 0, 0, 0.2);  */
+  color: white;
+  padding: 0.5rem 1rem; 
+  border-radius: 0.5rem; 
+  font-size: 0.9rem; 
+  z-index: 1000; 
 }

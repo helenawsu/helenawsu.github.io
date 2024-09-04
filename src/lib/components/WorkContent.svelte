@@ -8,7 +8,7 @@
             <br>
                 <p>AI SWE Intern </p><p> @ Labyrinth</p>
                 <br>
-                <p>Acessible XR Research Assistant</p>
+                <p><a href="https://www.youtube.com/watch?v=4SiNQYElEmE">Acessible XR Research Assistant</a> </p>
                 <p>@ Cornell Tech</p>
                 <br>
                 <p>Discovery Database Assistant </p>
