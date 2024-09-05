@@ -52,10 +52,17 @@
     } */
     h1{
         font-size: 1.5rem;
-        font-size: auto;
     }
     p {
         margin: .5rem;
-        font-size: auto;
     }
+    @media only screen and (max-width: 768px) {
+
+h1 {
+  font-size: 1rem;
+}
+p {
+  font-size: 0.625rem;
+}
+}
 </style>

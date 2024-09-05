@@ -29,5 +29,15 @@
         font-size: 0.75rem;
         text-decoration: underline;
     }
-
+    @media only screen and (max-width: 768px) {
+  .circle-container {
+      min-width: 20vw; /* Apply min-width for screens smaller than 768px */
+  }
+  h1 {
+    font-size: 0.375rem;
+  }
+  p {
+    font-size: 0.375rem;
+  }
+}
 </style>
