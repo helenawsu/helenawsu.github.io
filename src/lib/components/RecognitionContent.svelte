@@ -33,9 +33,10 @@
         font-size: 0.625rem;
     }
 
-    @media only screen and (max-width: 768px) {
+    @media (hover: none) and (pointer: coarse) {
+
   .circle-container {
-      min-width: 20vw; /* Apply min-width for screens smaller than 768px */
+      min-width: 30vw; /* Apply min-width for screens smaller than 768px */
   }
   h1 {
     font-size: 0.375rem;

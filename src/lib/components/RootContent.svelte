@@ -6,7 +6,7 @@
         <div class="content">
             <h1>Welcome to Helena's Page</h1>
             <p>I am a third-year at UC Berkeley majoring in EECS and IEOR (Industrial Engineering and Operations Research), with a interest in AI, XR, CV.</p>
-            <p>Here is my <a href="https://drive.google.com/file/d/1lk2t61f5mADALHl1LuW7USZ8-86D2fq8/view?usp=sharing" target="_blank">resume</a>, or explore around!</p>
+            <p>Here is my <a href="https://drive.google.com/file/d/148lCluA0meg-erTVvmAIUjCTFSverqYE/view?usp=sharing" target="_blank">resume</a>, or explore around!</p>
 
         </div>
     </div>
