@@ -7,10 +7,20 @@ import ProjectContent from './ProjectContent.svelte';
 import RecognitionContent from './RecognitionContent.svelte';
 import RandomContent from './RandomContent.svelte';
 import CoolPeople from './CoolPeople.svelte';
+import HotPeople from './HotPeople.svelte';
+import HotPeopleModal from './HotPeopleModal.svelte';
+import CoolPeopleModal from './CoolPeopleModal.svelte'; // Import CoolPeopleModal
+import CodeContent from './CodeContent.svelte'; // Import the new CodeContent component
+import ArtContent from './ArtContent.svelte'; // Import the new ArtContent component
+import Modeling from './Modeling.svelte';
+import Photography from './Photography.svelte';
+import Music from './Music.svelte';
 import * as d3 from 'd3';
-import Modal from './Modal.svelte';
 
 let showModal = false;
+let showHotModal = false; // Add a variable for HotPeopleModal
+let childNodesVisible = false; // Add a new state for CodeContent child nodes
+
 function recalculateForeignObject(node, simulation) {
     node.append("foreignObject")
         .attr("x", -100) 
@@ -53,10 +63,13 @@ onMount(() => {
     
     let nodes = [
         { id: "root", component: RootContent, radius: 0,  fx: width / 2, y: height/2}, 
-        { id: "child2", component: ProjectContent, radius: 0, fy: height*3/4 }, 
-        { id: "child3", component: RecognitionContent, radius: 0 }, 
-        { id: "child1", component: WorkContent, radius: 0, fx: width/4 },
-        { id: "child4", component: RandomContent, radius: 0, fx: width *3/4, y: height}, //random
+        // { id: "child2", component: ProjectContent, radius: 0, fy: height*3/4 }, 
+        // { id: "child3", component: RecognitionContent, radius: 0 }, 
+        // { id: "child1", component: WorkContent, radius: 0, fx: width/4 },
+        { id: "child4", component: RandomContent, radius: 0,}, //random
+        { id: "code", component: CodeContent, radius: 0, },
+        { id: "art", component: ArtContent, radius: 0, },
+
 
     ];
 
@@ -74,10 +87,12 @@ onMount(() => {
     };
 
     let links = [
-        { source: "root", target: "child1" },
-        { source: "root", target: "child2" },
-        { source: "root", target: "child3" },
-        { source: "root", target: "child4" }
+        // { source: "root", target: "child1" },
+        // { source: "root", target: "child2" },
+        // { source: "root", target: "child3" },
+        { source: "root", target: "child4" },
+        { source: "root", target: "code" },
+        { source: "root", target: "art" },
     ];
 
     const svg = d3.select("#d3-container")
@@ -125,9 +140,65 @@ onMount(() => {
     recalculateForeignObject(node, simulation);
     node.filter(d => d.id === "randomchild1")
         .on("click", function(event, d) {
-            console.log("click");
+            console.log("Cool People node clicked");
             showModal = true;
         });
+
+    node.filter(d => d.id === "randomchild2") // Add click handler for HotPeople node
+        .on("click", function(event, d) {
+            console.log("Hot People node clicked");
+            showHotModal = true;
+        });
+
+    // Add click handler for the CodeContent node
+    node.filter(d => d.id === "code")
+        .on("click", function(event, d) {
+            childNodesVisible = !childNodesVisible;
+            if (childNodesVisible) {
+                // Add child nodes for CodeContent
+                nodes = nodes.concat([
+                    { id: "award", component: RecognitionContent, radius: 0, parent: "code"},
+                    { id: "project", component: ProjectContent, radius: 0, parent: "code" },
+                    { id: "work", component: WorkContent, radius: 0, parent: "code"}
+                ]);
+
+                links = links.concat([
+                    { source: "code", target: "award" },
+                    { source: "code", target: "project" },
+                    { source: "code", target: "work" }
+                ]);
+            } else {
+                // Remove child nodes for CodeContent
+                nodes = nodes.filter(n => n.parent !== "code");
+                links = links.filter(l => l.source.id !== "code");
+            }
+            updateGraph();
+        });
+         // Add click handler for the ArtContent node
+    node.filter(d => d.id === "art")
+        .on("click", function(event, d) {
+            childNodesVisible = !childNodesVisible;
+            if (childNodesVisible) {
+                // Add child nodes for ArtContent without fx and fy
+                nodes = nodes.concat([
+                    { id: "modeling", component: Modeling, radius: 0, parent: "art" },
+                    { id: "photography", component: Photography, radius: 0, parent: "art" },
+                    { id: "music", component: Music, radius: 0, parent: "art" }
+                ]);
+
+                links = links.concat([
+                    { source: "art", target: "modeling" },
+                    { source: "art", target: "photography" },
+                    { source: "art", target: "music" }
+                ]);
+            } else {
+                // Remove child nodes for artContent
+                nodes = nodes.filter(n => n.parent !== "art");
+                links = links.filter(l => l.source.id !== "art");
+            }
+            updateGraph();
+        });
+
     //toggle random nodes collapse and expand
     node.filter(d => d.id === "child4")
         .on("click", function(event, d) {
@@ -140,12 +211,12 @@ onMount(() => {
             // Add child nodes close to the parent node's position
             nodes = nodes.concat([
                 { id: "randomchild1", component: CoolPeople, radius: 0, parent: "child4", fx: parentX }, 
-                // { id: "randomchild2", component: NodeContentTemplate, radius: 0, parent: "child4", fx: parentX}, 
+                { id: "randomchild2", component: HotPeople, radius: 0, parent: "child4", fx: parentX}, 
                 // { id: "randomchild3", component: NodeContentTemplate, radius: 0, parent: "child4", x: parentX, y: parentY - 50 }
             ]);
                 links = links.concat([
                     { source: "child4", target: "randomchild1", x: width/2 },
-                    // { source: "child4", target: "randomchild2" },
+                    { source: "child4", target: "randomchild2" },
                     // { source: "child4", target: "randomchild3" }
                 ]);
             } else {
@@ -155,8 +226,14 @@ onMount(() => {
             updateGraph();
             node.filter(d => d.id === "randomchild1")
         .on("click", function(event, d) {
-            console.log("click");
+            console.log("Cool People node clicked");
             showModal = true;
+        });
+
+    node.filter(d => d.id === "randomchild2") // Add click handler for HotPeople node
+        .on("click", function(event, d) {
+            console.log("Hot People node clicked");
+            showHotModal = true;
         });
         });
     // Add hover effect for scaling non-root nodes
@@ -189,12 +266,23 @@ onMount(() => {
                 .on("start", dragstarted)
                 .on("drag", dragged)
                 .on("end", dragended));
-        const nodeEnterFiltered = nodeEnter.filter(d => d.id.includes('randomchild'));
+
+        // Include art child nodes in the filtered selection
+        const nodeEnterFiltered = nodeEnter.filter(d => 
+            d.id.includes('randomchild') || 
+            d.id.includes('award') || 
+            d.id.includes('project') || 
+            d.id.includes('work') || 
+            d.id.includes('modeling') || 
+            d.id.includes('photography') || 
+            d.id.includes('music')
+        );
+
         recalculateForeignObject(nodeEnterFiltered, simulation);
         node = nodeEnter.merge(node);
         simulation.nodes(nodes);
         simulation.force("link").links(links);
-        simulation.force("collision").radius(d => d.radius+10);
+        simulation.force("collision").radius(d => d.radius + 10);
         simulation.alpha(0.3).restart();
         simulation.force("link", d3.forceLink(links).id(d => d.id).distance(linkDistance));
     }
@@ -235,14 +323,5 @@ onMount(() => {
 </script>
 
 <div id="d3-container"></div>
-<Modal bind:showModal>
-	<h3 slot="header">
-		A list of cool people
-		<!-- <small><em>adjective</em> mod·al \ˈmō-dəl\</small> -->
-	</h3>
-
-	<ul >
-        <li><a href="https://github.com/r2dev2" style="color: black;">r2dev2</a></li>
-	</ul>
-
-</Modal>
+<CoolPeopleModal bind:showModal />
+<HotPeopleModal bind:showHotModal />

@@ -4,7 +4,7 @@
 <div class="circle-container">
     <div class="circle">
         <div class="content">
-            <p>Misc</p>
+            <p>Code</p>
 
         </div>
     </div>

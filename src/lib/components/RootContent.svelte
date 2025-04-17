@@ -4,9 +4,9 @@
 <div class="root-container">
     <div class="root-circle">
         <div class="content">
-            <h1>Welcome to Helena's Page</h1>
-            <p>I am a third-year at UC Berkeley majoring in EECS and IEOR (Industrial Engineering and Operations Research), with a interest in AI, XR, CV.</p>
-            <p>Here is my <a href="https://drive.google.com/file/d/148lCluA0meg-erTVvmAIUjCTFSverqYE/view?usp=sharing" target="_blank">resume</a>, or explore around!</p>
+            <h1>Welcome</h1>
+            <p>Helena Su is a third-year at UC Berkeley majoring in EECS and IEOR, with a interest in some stuff.</p>
+            <p>Explore around!</p>
 
         </div>
     </div>
@@ -20,7 +20,7 @@
         aspect-ratio: 1;
         border-radius: 50%;  
         /* idk why the below fix but it did */
-        width: 30vw; 
+        width: 20vw; 
         padding: 0rem;
         z-index: 1;
     }
