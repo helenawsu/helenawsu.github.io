@@ -19,7 +19,9 @@ import * as d3 from 'd3';
 
 let showModal = false;
 let showHotModal = false; // Add a variable for HotPeopleModal
-let childNodesVisible = false; // Add a new state for CodeContent child nodes
+let artNodesVisible = false; // Visibility state for art child nodes
+let codeNodesVisible = false; // Visibility state for code child nodes
+let randomNodesVisible = false; // Visibility state for random child nodes
 
 function recalculateForeignObject(node, simulation) {
     node.append("foreignObject")
@@ -110,8 +112,6 @@ onMount(() => {
         .force("charge", d3.forceManyBody().strength(d => {
         if (d.id === "root") {
             return -10000;  
-        } else if (d.id.includes("random")) {
-            return 100;  
         } else {
             return -1000;  
         }
@@ -150,92 +150,96 @@ onMount(() => {
             showHotModal = true;
         });
 
+    // Helper function for toggling children
+    function toggleChildren(parentId, flag, newNodes, newLinks) {
+        // When expanding: add new nodes and links if not already present
+        if (!flag) {
+            newNodes.forEach(child => {
+                if (!nodes.find(n => n.id === child.id)) {
+                    nodes.push(child);
+                }
+            });
+            newLinks.forEach(link => {
+                if (!links.find(l => (l.source.id || l.source) === link.source && (l.target.id || l.target) === link.target)) {
+                    links.push(link);
+                }
+            });
+        } else { // When collapsing: remove all children that have parent === parentId
+            for (let i = nodes.length - 1; i >= 0; i--) {
+                if (nodes[i].parent === parentId) nodes.splice(i, 1);
+            }
+            for (let i = links.length - 1; i >= 0; i--) {
+                if ((links[i].source.id || links[i].source) === parentId) links.splice(i, 1);
+            }
+        }
+        updateGraph();
+        return !flag;
+    }
+
+    // Define children for each group
+    const codeChildrenNodes = [
+        { id: "award", component: RecognitionContent, radius: 0, parent: "code" },
+        { id: "project", component: ProjectContent, radius: 0, parent: "code" },
+        { id: "work", component: WorkContent, radius: 0, parent: "code" }
+    ];
+    const codeChildrenLinks = [
+        { source: "code", target: "award" },
+        { source: "code", target: "project" },
+        { source: "code", target: "work" }
+    ];
+
+    const artChildrenNodes = [
+        { id: "modeling", component: Modeling, radius: 0, parent: "art" },
+        { id: "photography", component: Photography, radius: 0, parent: "art" },
+        { id: "music", component: Music, radius: 0, parent: "art" }
+    ];
+    const artChildrenLinks = [
+        { source: "art", target: "modeling" },
+        { source: "art", target: "photography" },
+        { source: "art", target: "music" }
+    ];
+
+    const randomChildrenNodes = [
+        { id: "randomchild1", component: CoolPeople, radius: 0, parent: "child4", fx: 0 },
+        { id: "randomchild2", component: HotPeople, radius: 0, parent: "child4", fx: 0 }
+    ];
+    const randomChildrenLinks = [
+        { source: "child4", target: "randomchild1" },
+        { source: "child4", target: "randomchild2" }
+    ];
+
     // Add click handler for the CodeContent node
     node.filter(d => d.id === "code")
         .on("click", function(event, d) {
-            childNodesVisible = !childNodesVisible;
-            if (childNodesVisible) {
-                // Add child nodes for CodeContent
-                nodes = nodes.concat([
-                    { id: "award", component: RecognitionContent, radius: 0, parent: "code"},
-                    { id: "project", component: ProjectContent, radius: 0, parent: "code" },
-                    { id: "work", component: WorkContent, radius: 0, parent: "code"}
-                ]);
-
-                links = links.concat([
-                    { source: "code", target: "award" },
-                    { source: "code", target: "project" },
-                    { source: "code", target: "work" }
-                ]);
-            } else {
-                // Remove child nodes for CodeContent
-                nodes = nodes.filter(n => n.parent !== "code");
-                links = links.filter(l => l.source.id !== "code");
-            }
-            updateGraph();
+            codeNodesVisible = toggleChildren("code", codeNodesVisible, codeChildrenNodes, codeChildrenLinks);
         });
-         // Add click handler for the ArtContent node
+
+    // Add click handler for the ArtContent node
     node.filter(d => d.id === "art")
         .on("click", function(event, d) {
-            childNodesVisible = !childNodesVisible;
-            if (childNodesVisible) {
-                // Add child nodes for ArtContent without fx and fy
-                nodes = nodes.concat([
-                    { id: "modeling", component: Modeling, radius: 0, parent: "art" },
-                    { id: "photography", component: Photography, radius: 0, parent: "art" },
-                    { id: "music", component: Music, radius: 0, parent: "art" }
-                ]);
-
-                links = links.concat([
-                    { source: "art", target: "modeling" },
-                    { source: "art", target: "photography" },
-                    { source: "art", target: "music" }
-                ]);
-            } else {
-                // Remove child nodes for artContent
-                nodes = nodes.filter(n => n.parent !== "art");
-                links = links.filter(l => l.source.id !== "art");
-            }
-            updateGraph();
+            artNodesVisible = toggleChildren("art", artNodesVisible, artChildrenNodes, artChildrenLinks);
         });
 
     //toggle random nodes collapse and expand
     node.filter(d => d.id === "child4")
         .on("click", function(event, d) {
-            childNodesVisible = !childNodesVisible;
-            if (childNodesVisible) {
-                // Find the position of the parent node (child4)
             const parentNode = nodes.find(n => n.id === "child4");
-            const parentX = parentNode.x;
-            const parentY = parentNode.y;
-            // Add child nodes close to the parent node's position
-            nodes = nodes.concat([
-                { id: "randomchild1", component: CoolPeople, radius: 0, parent: "child4", fx: parentX }, 
-                { id: "randomchild2", component: HotPeople, radius: 0, parent: "child4", fx: parentX}, 
-                // { id: "randomchild3", component: NodeContentTemplate, radius: 0, parent: "child4", x: parentX, y: parentY - 50 }
-            ]);
-                links = links.concat([
-                    { source: "child4", target: "randomchild1", x: width/2 },
-                    { source: "child4", target: "randomchild2" },
-                    // { source: "child4", target: "randomchild3" }
-                ]);
-            } else {
-                nodes = nodes.filter(n => n.parent !== "child4");
-                links = links.filter(l => l.source.id !== "child4");
-            }
-            updateGraph();
+            // Update fx (for positioning) in randomChildrenNodes:
+            randomChildrenNodes.forEach(child => child.fx = parentNode.x);
+            randomNodesVisible = toggleChildren("child4", randomNodesVisible, randomChildrenNodes, randomChildrenLinks);
+            // (Re)attach click handlers for dynamic random children as needed.
             node.filter(d => d.id === "randomchild1")
-        .on("click", function(event, d) {
-            console.log("Cool People node clicked");
-            showModal = true;
+                .on("click", function(event, d) {
+                    console.log("Cool People node clicked");
+                    showModal = true;
+                });
+            node.filter(d => d.id === "randomchild2")
+                .on("click", function(event, d) {
+                    console.log("Hot People node clicked");
+                    showHotModal = true;
+                });
         });
 
-    node.filter(d => d.id === "randomchild2") // Add click handler for HotPeople node
-        .on("click", function(event, d) {
-            console.log("Hot People node clicked");
-            showHotModal = true;
-        });
-        });
     // Add hover effect for scaling non-root nodes
     node.filter(d => d.id !== "root")
         .on("mouseover", function(event, d) {
@@ -251,14 +255,16 @@ onMount(() => {
                 .style("transform", "scale(1)");
         });
     function updateGraph() {
-        link = link.data(links);
+        // Rebind links with a composite key of source and target IDs.
+        link = link.data(links, d => `${d.source.id}-${d.target.id}`);
         link.exit().remove();
         link = link.enter().append("line")
             .attr("stroke-width", 2)
             .attr("stroke", "#999")
             .merge(link);
 
-        node = node.data(nodes);
+        // Rebind nodes using each node's id as the key.
+        node = node.data(nodes, d => d.id);
         node.exit().remove();
         const nodeEnter = node.enter().append("g")
             .attr("class", "node")
@@ -267,16 +273,7 @@ onMount(() => {
                 .on("drag", dragged)
                 .on("end", dragended));
 
-        // Include art child nodes in the filtered selection
-        const nodeEnterFiltered = nodeEnter.filter(d => 
-            d.id.includes('randomchild') || 
-            d.id.includes('award') || 
-            d.id.includes('project') || 
-            d.id.includes('work') || 
-            d.id.includes('modeling') || 
-            d.id.includes('photography') || 
-            d.id.includes('music')
-        );
+        const nodeEnterFiltered = nodeEnter; // Include all nodes without filtering
 
         recalculateForeignObject(nodeEnterFiltered, simulation);
         node = nodeEnter.merge(node);

@@ -4,7 +4,7 @@
 <div class="circle-container">
     <div class="circle">
         <div class="content">
-            <p>Misc</p>
+            <h2>misc</h2>
 
         </div>
     </div>
@@ -15,7 +15,9 @@
     .circle-container {
         cursor: pointer;
     }
-
+    .circle {
+        background-color: #aaaaaa;
+    }
     .circle p, h1 {
         /* margin: 1rem;  Remove default paragraph and heading margins */
         padding: 0;

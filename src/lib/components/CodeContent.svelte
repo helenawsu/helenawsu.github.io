@@ -4,14 +4,16 @@
 <div class="circle-container">
     <div class="circle">
         <div class="content">
-            <p>Code</p>
+            <h2>Code</h2>
 
         </div>
     </div>
 </div>
 
 <style>
-
+    .circle{
+        background-color: #a5bd57;
+    }
     .circle-container {
         cursor: pointer;
     }

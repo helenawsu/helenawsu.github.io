@@ -4,7 +4,7 @@
 <div class="circle-container">
     <div class="circle">
         <div class="content">
-            <p>Art</p>
+            <h2>Art</h2>
 
         </div>
     </div>
@@ -14,6 +14,9 @@
 
     .circle-container {
         cursor: pointer;
+    }
+    .circle {
+        background-color: #f54260;
     }
 
     .circle p, h1 {
