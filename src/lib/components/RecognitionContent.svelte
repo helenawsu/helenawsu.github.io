@@ -60,9 +60,11 @@
     h1 {
         font-size: 1.5rem;
     }
+@media only screen and (min-width: 769px) {
     p {
         font-size: 0.75rem;
     }
+}
     .recognition-btn {
         background: #8c975e;
         font-family: "Reddit Mono", monospace;
@@ -81,7 +83,7 @@
     a { color: inherit;  }
             @media only screen and (max-width: 768px) {
             p {
-        font-size: 1em;
+        font-size: 1rem;
     }
 }
     @media (hover: none) and (pointer: coarse) {
