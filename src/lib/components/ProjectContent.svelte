@@ -84,8 +84,8 @@
         h1 {
             font-size: 0.375rem;
         }
-        p {
-            font-size: 0.375rem;
-        }
+ .circle p {
+        font-size: 0.375rem;
+    }
     }
 </style>
