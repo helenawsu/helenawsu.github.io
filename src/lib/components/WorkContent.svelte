@@ -80,10 +80,10 @@
         justify-content: center;
         padding: 0;
     }
-    a { color: inherit; text-decoration: none; }
+    a { color: inherit;  }
         @media only screen and (max-width: 768px) {
             p {
-        font-size: 1rem;
+        font-size: 1em;
     }
 }
     @media (hover: none) and (pointer: coarse) {
