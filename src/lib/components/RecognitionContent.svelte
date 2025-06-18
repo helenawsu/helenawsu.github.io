@@ -83,7 +83,7 @@
     a { color: inherit;  }
             @media only screen and (max-width: 768px) {
             p {
-        font-size: 1rem;
+        font-size: 1em;
     }
 }
     @media (hover: none) and (pointer: coarse) {
