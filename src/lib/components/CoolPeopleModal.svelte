@@ -20,4 +20,10 @@
     <ul>
         <li><a href="https://www.linkedin.com/in/annabella-chow/" style="color: black;">choianna</a> </li>
     </ul>
+    <ul>
+        <li><a href="https://buggy213.github.io/" style="color: black;">catroll</a> </li>
+    </ul>
+    <ul>
+        <li><a href="https://www.instagram.com/harrytt223/" style="color: black;">lemon塔塔</a> </li>
+    </ul> 
 </Modal>
