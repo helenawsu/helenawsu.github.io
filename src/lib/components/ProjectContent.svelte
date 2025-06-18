@@ -70,6 +70,11 @@
         justify-content: center;
         padding: 0;
     }
+            @media only screen and (max-width: 768px) {
+            p {
+        font-size: 1rem;
+    }
+}
     @media (hover: none) and (pointer: coarse) {
         .circle-container {
             min-width: 30vw;

@@ -89,7 +89,13 @@
         justify-content: center;
         padding: 0;
     }
+    p {
+        font-size: 1rem;
+    }
     @media only screen and (max-width: 768px) {
+            p {
+        font-size: 1rem;
+    }
         .root-container {
             width: 40vw;
         }

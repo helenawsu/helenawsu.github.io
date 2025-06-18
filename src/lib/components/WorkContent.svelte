@@ -81,6 +81,11 @@
         padding: 0;
     }
     a { color: inherit; text-decoration: none; }
+        @media only screen and (max-width: 768px) {
+            p {
+        font-size: 1rem;
+    }
+}
     @media (hover: none) and (pointer: coarse) {
 
   .circle-container {
