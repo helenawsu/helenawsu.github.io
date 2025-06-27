@@ -27,8 +27,17 @@
         <div class="content">
                 <h1>Project</h1>
                 <br>
-    <p><a href="https://github.com/helenawsu">Github</a></p>
-        </div>
+                <p><a href="https://bingart.vercel.app/explore">Mom's Art Portfolio</a></p>
+                <p>style-aware chatbot and art generation</p>
+                <br>
+
+                <p><a href="https://bart-uber-subsidy.streamlit.app/">Bart Uber Subsidy Analysis</a></p>
+                <p>enterprise-scale system simulation</p>
+                <br>
+
+                <p><a href="https://github.com/helenawsu">Github</a></p>
+                <p>Look at my Github for all projects</p>
+                </div>
                 </div>
 
             {/if}
@@ -37,6 +46,8 @@
 
 <Modal bind:showModal>
     <span slot="header"><h2>Project</h2></span>
+                    <p><a href="https://bingart.vercel.app/explore">Mom's Art Portfolio</a> style-aware chatbot and art generation</p>
+                                    <p><a href="https://bart-uber-subsidy.streamlit.app/">Bart Uber Subsidy Analysis</a> enterprise-scale system simulation</p>
     <p><a href="https://github.com/helenawsu">Github</a> Look at my Github projects</p>
 </Modal>
 

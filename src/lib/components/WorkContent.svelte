@@ -99,7 +99,10 @@
  .circle p {
         font-size: 0.375rem;
     }
+    
 }
 
-
+.content {
+        padding: 1rem
+    }
 </style>

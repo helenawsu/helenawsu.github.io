@@ -25,7 +25,7 @@
                 <button class="welcome-btn" on:click={openModal}>Welcome</button>
             {:else}
                 <h1>Welcome</h1>
-                <p>Helena Su is a third-year at UC Berkeley majoring in EECS and IEOR, with a interest in some stuff.</p>
+                <p>Helena Su is a fourth-year at UC Berkeley majoring in EECS and IEOR, with a interest in some stuff.</p>
                 <p>Explore around!</p>
             {/if}
         </div>

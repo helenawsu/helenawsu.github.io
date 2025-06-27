@@ -1,5 +1,5 @@
 <script>
-        import Modal from './Modal.svelte';
+    import Modal from './Modal.svelte';
     import { onMount } from 'svelte';
     let showModal = false;
     let isMobile = false;
@@ -19,36 +19,44 @@
 </script>
 
 <div class="circle-container">
-    {#if isMobile}
-                <button class="modal-btn" on:click={openModal}>Photography</button>
+        {#if isMobile}
+                <button class="modal-btn" on:click={openModal}>Title</button>
             {:else}
     <div class="circle">
         <div class="content">
-            <h1>Photography</h1>
-            <p><a href="https://helenawsu.github.io/photography/"> Photography Portfolio</p>
+            <p>!Under!</p><p> !Construction!</p>
 
         </div>
     </div>
-    {/if}
+        {/if}
 </div>
 <Modal bind:showModal>
     <span slot="header"><h2>Photography</h2></span>
-                                <p><a href="https://helenawsu.github.io/photography/"> Photography Portfolio</p>
+                                <p>!Under!</p><p> !Construction!</p>
 </Modal>
 <style>
     .circle {
-        background-color: #588ced;
+        background-color: #a39f96;
     }
     .circle-container {
-        cursor: pointer;
+        margin: 0;
+        padding: 0;
     }
 
-
-    .circle p, h1 {
-        /* padding: 0;
-        margin: 0rem; */
+    .circle p {
+        padding: 0;
+        margin: 0rem;
     }
-    a {
+
+    h1 {
+        font-size: 1.5rem;
+                margin: 0rem;
+
+    }
+    p{
+        font-size: 0.5rem;
+    }
+a {
         text-decoration: underline;
         color: inherit;
     }
@@ -67,19 +75,8 @@
         justify-content: center;
         padding: 0;
     }
-    h1 {
-        font-size: 1.5rem;
-    }
-    p{
-        font-size: 0.75rem;
-    }
-            @media only screen and (max-width: 768px) {
-            p {
-        font-size: 1em;
-    }
-    }
     .content {
-        /* margin: 0rem; */
+        margin: 0rem;
     }
 
 </style>

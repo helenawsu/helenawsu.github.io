@@ -27,12 +27,15 @@
         <div class="content">
                 <h1>Awards</h1>
                 <br>
+                
+                <p><a href="https://devpost.com/helenawsu">Devpost</a></p>
+                <p>Awards  @ several XR Hacks</p>
+                                <br>
+
                 <p><a href="http://www.scholink.org/ojs/index.php/wjssr/article/view/3609">Game Theory and the Three-Body Problem</a></p>
                 <p>@ World Journal of Social Science</p>
-                <br>
-                <p><a href="https://devpost.com/helenawsu">Devpost</a></p>
-                <p>@ several XR Hacks</p>
                         </div>
+                        
     </div>
 
 
@@ -47,7 +50,7 @@
     </p>
     <p>
         <a href="https://devpost.com/helenawsu">Devpost</a>
-        @ several XR Hacks
+        Awards @ several XR Hacks
     </p>
 
 </Modal>

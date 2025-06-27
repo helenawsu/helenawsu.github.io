@@ -15,6 +15,7 @@ import ArtContent from './ArtContent.svelte'; // Import the new ArtContent compo
 import Modeling from './Modeling.svelte';
 import Photography from './Photography.svelte';
 import Music from './Music.svelte';
+import Berkeley from './BerkeleyContent.svelte'; // Import the new Berkeley components
 import * as d3 from 'd3';
 
 let showModal = false;
@@ -201,11 +202,13 @@ onMount(() => {
 
     const randomChildrenNodes = [
         { id: "randomchild1", component: CoolPeople, radius: 0, parent: "child4", fx: 0 },
-        { id: "randomchild2", component: HotPeople, radius: 0, parent: "child4", fx: 0 }
+        { id: "randomchild2", component: HotPeople, radius: 0, parent: "child4", fx: 0 },
+        { id: "randomchild3", component: Berkeley, radius: 0, parent: "child4", fx: 0 }
     ];
     const randomChildrenLinks = [
         { source: "child4", target: "randomchild1" },
-        { source: "child4", target: "randomchild2" }
+        { source: "child4", target: "randomchild2" },
+        { source: "child4", target: "randomchild3" }
     ];
 
     // Add click handler for the CodeContent node
