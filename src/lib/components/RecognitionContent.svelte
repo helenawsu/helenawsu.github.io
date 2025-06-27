@@ -29,7 +29,7 @@
                 <br>
                 
                 <p><a href="https://devpost.com/helenawsu">Devpost</a></p>
-                <p>Awards  @ several XR Hacks</p>
+                <p>Awards @ several XR Hacks</p>
                                 <br>
 
                 <p><a href="http://www.scholink.org/ojs/index.php/wjssr/article/view/3609">Game Theory and the Three-Body Problem</a></p>
@@ -44,15 +44,15 @@
 
 <Modal bind:showModal>
     <span slot="header"><h2>Awards</h2></span>
-    <p>
-        <a href="http://www.scholink.org/ojs/index.php/wjssr/article/view/3609">Game Theory and the Three-Body Problem</a>
-        @ World Journal of Social Science
-    </p>
+
     <p>
         <a href="https://devpost.com/helenawsu">Devpost</a>
         Awards @ several XR Hacks
     </p>
-
+    <p>
+        <a href="http://www.scholink.org/ojs/index.php/wjssr/article/view/3609">Game Theory and the Three-Body Problem</a>
+        @ World Journal of Social Science
+    </p>
 </Modal>
 
 <style>

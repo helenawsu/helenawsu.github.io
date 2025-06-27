@@ -29,7 +29,7 @@
             <p>I like sightreading classical music, learning</p><p> improvisation, and exploring computational music</p>
             <br>
             <p>Instruments</p>
-            <p> violin, viola, drums, <a href="https://cycling74.com/products/max-9">Max9</a>, bass?, clarinet? </p>
+            <p> violin, viola, drums, <a href="https://cycling74.com/products/max-9">Max9</a>, clarinet? </p>
             <br>
             <p>Creations</p>
             <p><a href="https://treetraversal-eight.vercel.app/">Tree Traversal (Unplayable Viola Duet)</a></p>
@@ -44,10 +44,9 @@
     <span slot="header"><h2>Music</h2></span>
                                 <p>I like sightreading classical music, learning</p><p> improvisation, and exploring computational music</p>
 
-            <p>Instruments</p>
-            <p> violin, viola, drums, <a href="https://cycling74.com/products/max-9">Max9</a>, bass?, clarinet? </p>
+            <p>Instruments: violin, viola, drums, <a href="https://cycling74.com/products/max-9">Max9</a>, clarinet? </p>
 
-            <p>Creations</p>
+            <p>Creations:</p>
             <p><a href="https://treetraversal-eight.vercel.app/">Tree Traversal (Unplayable Viola Duet)</a></p>
             <p><a href="https://github.com/helenawsu/force_field">Force Field (Crude Sound Installation)</a></p>
 
