@@ -85,21 +85,6 @@
         :global(dialog > div) {
             max-height: 70vh; /* smaller modal on mobile for exit button space */
         }
-        :global(dialog[open]) {
-    position: fixed !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    max-width: 98vw;
-    max-height: 90vh;
-    width: auto;
-    height: auto;
-    overflow-y: auto !important;
-    overscroll-behavior: contain;
-    /* Prevent background scroll on iOS */
-    touch-action: none;
-    z-index: 10000;
-}
     }
     .circle {
         background-color: #ed9b58;
@@ -149,4 +134,37 @@ a {
     .content {
         /* margin: 0rem; */
     }
+/* Make dialog and its backdrop block all pointer/touch events behind it */
+:global(dialog[open]) {
+    /* position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    max-width: 98vw;
+    max-height: 90vh;
+    width: auto;
+    height: auto; */
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+    z-index: 10000;
+}
+
+:global(dialog[open]::backdrop) {
+    background: rgba(0,0,0,0.3);
+    z-index: 9999;
+    pointer-events: auto;
+    /* Ensures the backdrop blocks all pointer/touch events */
+}
+
+/* Prevent background scroll when modal is open */
+:global(html:has(dialog[open])) {
+    overflow: hidden;
+}
+
+/* On mobile, make modal a bit shorter for close button space */
+@media only screen and (max-width: 768px) {
+    :global(dialog[open]) {
+        max-height: 70vh;
+    }
+}
 </style>
