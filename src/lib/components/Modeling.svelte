@@ -85,6 +85,21 @@
         :global(dialog > div) {
             max-height: 70vh; /* smaller modal on mobile for exit button space */
         }
+        :global(dialog[open]) {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    max-width: 98vw;
+    max-height: 90vh;
+    width: auto;
+    height: auto;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+    /* Prevent background scroll on iOS */
+    touch-action: none;
+    z-index: 10000;
+}
     }
     .circle {
         background-color: #ed9b58;
@@ -134,8 +149,4 @@ a {
     .content {
         /* margin: 0rem; */
     }
-:global(html:has(dialog[open])) {
-    overflow: hidden;
-    touch-action: none;
-}
 </style>
