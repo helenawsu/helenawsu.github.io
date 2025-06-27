@@ -134,5 +134,8 @@ a {
     .content {
         /* margin: 0rem; */
     }
-
+:global(html:has(dialog[open])) {
+    overflow: hidden;
+    touch-action: none;
+}
 </style>
