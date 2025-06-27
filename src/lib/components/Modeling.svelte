@@ -69,7 +69,7 @@
     }
     .gallery img {
         max-width: 90vw;
-        max-height: 25vw;
+        max-height: 40vh;
         width: 100%;
         height: auto;
 
