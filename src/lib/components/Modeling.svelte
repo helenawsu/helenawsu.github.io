@@ -81,6 +81,11 @@
         max-height: 90vh;
         overflow-y: auto;
     }
+        @media only screen and (max-width: 768px) {
+        :global(dialog > div) {
+            max-height: 70vh; /* smaller modal on mobile for exit button space */
+        }
+    }
     .circle {
         background-color: #ed9b58;
     }
