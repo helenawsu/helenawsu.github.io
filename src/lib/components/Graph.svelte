@@ -11,6 +11,7 @@ import HotPeople from './HotPeople.svelte';
 import HotPeopleModal from './HotPeopleModal.svelte';
 import CoolPeopleModal from './CoolPeopleModal.svelte'; // Import CoolPeopleModal
 import CodeContent from './CodeContent.svelte'; // Import the new CodeContent component
+import BlogContent from './BlogContent.svelte'; // Import the new BlogContent component
 import ArtContent from './ArtContent.svelte'; // Import the new ArtContent component
 import Modeling from './Modeling.svelte';
 import Photography from './Photography.svelte';
@@ -72,6 +73,7 @@ onMount(() => {
         { id: "child4", component: RandomContent, radius: 0,}, //random
         { id: "code", component: CodeContent, radius: 0, },
         { id: "art", component: ArtContent, radius: 0, },
+        { id: "blog", component: BlogContent, radius: 0, },
 
 
     ];
@@ -96,6 +98,7 @@ onMount(() => {
         { source: "root", target: "child4" },
         { source: "root", target: "code" },
         { source: "root", target: "art" },
+        { source: "root", target: "blog" },
     ];
 
     const svg = d3.select("#d3-container")
@@ -221,6 +224,12 @@ onMount(() => {
     node.filter(d => d.id === "art")
         .on("click", function(event, d) {
             artNodesVisible = toggleChildren("art", artNodesVisible, artChildrenNodes, artChildrenLinks);
+        });
+
+    // Add click handler for the Blog node (opens external site)
+    node.filter(d => d.id === "blog")
+        .on("click", function(event, d) {
+            window.open('https://helenasu-blog.vercel.app/', '_blank');
         });
 
     //toggle random nodes collapse and expand

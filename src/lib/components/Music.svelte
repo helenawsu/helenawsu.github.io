@@ -32,6 +32,8 @@
             <p> violin, viola, drums, <a href="https://cycling74.com/products/max-9">Max9</a>, clarinet? </p>
             <br>
             <p>Creations</p>
+            <p><a href="https://harmonicgraph.vercel.app//">Chord Progression Generator</a></p>
+
             <p><a href="https://treetraversal-eight.vercel.app/">Tree Traversal (Unplayable Viola Duet)</a></p>
             <p><a href="https://github.com/helenawsu/force_field">Force Field (Crude Sound Installation)</a></p>
 
@@ -47,6 +49,7 @@
             <p>Instruments: violin, viola, drums, <a href="https://cycling74.com/products/max-9">Max9</a>, clarinet? </p>
 
             <p>Creations:</p>
+            <p><a href="https://harmonicgraph.vercel.app//">Harmonic Progression Generator (Continuous Frequency)</a></p>
             <p><a href="https://treetraversal-eight.vercel.app/">Tree Traversal (Unplayable Viola Duet)</a></p>
             <p><a href="https://github.com/helenawsu/force_field">Force Field (Crude Sound Installation)</a></p>
 
