@@ -39,7 +39,7 @@
     <span slot="header"><h2>Berkeley</h2></span>
                                
             <p>Come join Extended Reality @ Berkeley, Cal Community Music, and Cal Archery Club</p>
-            <a href="https://drive.google.com/file/d/127V4ponujWbnWRjrb6XcHhX7gmzWd2oN/view?usp=sharing"><p>Classes I took</p></a>
+            <a href="https://drive.google.com/file/d/1BI6bq5YNqtaDGvrmm2Vn4IXQSqzjlIPB/view?usp=sharing"><p>Classes I took</p></a>
 </Modal>
 <style>
     .circle {
