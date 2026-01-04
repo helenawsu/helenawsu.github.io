@@ -26,7 +26,7 @@
         <div class="content">
             <h1>Berkeley</h1>
             <br>
-            <p>Come join </p><p>Extended Reality @ Berkeley </p><p>Cal Community Music </p><p> Cal Archery Club</p>
+            <p>Come join </p><a href="https://xr.berkeley.edu/"><p>Extended Reality @ Berkeley</p></a>
             <br>
             <a href="https://drive.google.com/file/d/1BI6bq5YNqtaDGvrmm2Vn4IXQSqzjlIPB/view?usp=sharing"><p>Classes I took</p></a>
 
@@ -38,7 +38,7 @@
 <Modal bind:showModal>
     <span slot="header"><h2>Berkeley</h2></span>
                                
-            <p>Come join Extended Reality @ Berkeley, Cal Community Music, and Cal Archery Club</p>
+            <p>Come join </p><a href="https://xr.berkeley.edu/"><p>Extended Reality @ Berkeley</p></a>
             <a href="https://drive.google.com/file/d/1BI6bq5YNqtaDGvrmm2Vn4IXQSqzjlIPB/view?usp=sharing"><p>Classes I took</p></a>
 </Modal>
 <style>
