@@ -28,7 +28,7 @@
             <br>
             <p>Come join </p><p>Extended Reality @ Berkeley </p><p>Cal Community Music </p><p> Cal Archery Club</p>
             <br>
-            <a href="https://drive.google.com/file/d/127V4ponujWbnWRjrb6XcHhX7gmzWd2oN/view?usp=sharing"><p>Classes I took</p></a>
+            <a href="https://drive.google.com/file/d/1BI6bq5YNqtaDGvrmm2Vn4IXQSqzjlIPB/view?usp=sharing"><p>Classes I took</p></a>
 
 
         </div>
